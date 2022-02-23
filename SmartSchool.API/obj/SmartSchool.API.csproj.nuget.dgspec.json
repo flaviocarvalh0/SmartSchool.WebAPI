@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj": {}
+    "C:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj": {}
   },
   "projects": {
-    "c:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj": {
+    "C:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj",
+        "projectUniqueName": "C:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj",
         "projectName": "SmartSchool.API",
-        "projectPath": "c:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj",
+        "projectPath": "C:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\SmartSchool.API.csproj",
         "packagesPath": "C:\\Users\\flavi\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\obj\\",
+        "outputPath": "C:\\Users\\flavi\\Desktop\\Udemy WebAPI\\SmartSchool.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\flavi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -21,6 +21,7 @@
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
