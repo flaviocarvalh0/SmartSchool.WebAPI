@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.API.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +9,10 @@ builder.Services.AddControllers()
                 .AddNewtonsoftJson(
                     opt => opt.SerializerSettings.
                     ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddDbContext<DataContext>(
     context => context.UseSqlite(builder.Configuration.GetConnectionString("default"))

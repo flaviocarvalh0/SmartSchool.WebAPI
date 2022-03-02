@@ -1,6 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.API.Data;
+using SmartSchool.API.Dto;
 using SmartSchool.API.Models;
 
 namespace SmartSchool.API.Controllers
@@ -9,13 +11,15 @@ namespace SmartSchool.API.Controllers
     [Route("api/[controller]")]
     public class AlunoController : ControllerBase
     {
-        
-        private readonly IRepository _repository;
 
-        public AlunoController(IRepository repository)
+        private readonly IRepository _repository;
+        private readonly IMapper _mapper;
+
+        public AlunoController(IRepository repository, IMapper mapper)
         {
+            _mapper = mapper;
             _repository = repository;
-            
+
         }
 
 
@@ -23,19 +27,25 @@ namespace SmartSchool.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            
-            var result = _repository.GetAllAlunos(true);
 
-            return Ok(result);
+            var alunos = _repository.GetAllAlunos(true);
+
+
+
+            return Ok(_mapper.Map<IEnumerable<AlunoDTO>>(alunos));
         }
         //api/aluno/id
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var retornaAluno = _repository.GetAlunoById(id, true);
+
             if (retornaAluno == null)
                 return BadRequest("Aluno não encontrado");
-            return Ok(retornaAluno);
+
+            var alunoDTO = _mapper.Map<AlunoDTO>(retornaAluno);
+
+            return Ok(alunoDTO);
         }
 
         //api/aluno/nome
@@ -50,13 +60,15 @@ namespace SmartSchool.API.Controllers
 
         //api/aluno
         [HttpPost]
-        public IActionResult Post(Aluno aluno)
+        public IActionResult Post(AlunoRegistrarDTO model)
         {
+
+            var aluno = _mapper.Map<Aluno>(model);
 
             _repository.Add(aluno);
             if (_repository.SaveChanges())
             {
-                return Ok($"{aluno.Nome} Salvo com sucesso!!");
+                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDTO>(aluno));
             }
 
             return BadRequest("Aluno não foi salvo");
@@ -66,30 +78,34 @@ namespace SmartSchool.API.Controllers
 
         //AsNoTracking(), quando vamos atualizar algum item, precisamos fazer a busca para ver se o item existe, porem essa busca trava e não podemos atualizalo, então usamos o AsNoTracking() para desbloquear a busca e conseguir atualizar o aluno
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Aluno aluno)
+        public IActionResult Put(int id, AlunoRegistrarDTO model)
         {
-            var al = _repository.GetAlunoById(id);
-            if (al == null)
+            var aluno = _repository.GetAlunoById(id);
+            if (aluno == null)
                 return BadRequest("Aluno não foi encontrado");
+
+            _mapper.Map(model, aluno);
 
             _repository.Update(aluno);
             if (_repository.SaveChanges())
-                return Ok($"Atualizado com sucesso para {aluno.Nome}.");
+                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDTO>(aluno));
 
             return BadRequest("Aluno não atualizado");
 
 
         }
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, Aluno aluno)
+        public IActionResult Patch(int id, AlunoRegistrarDTO model)
         {
-            var al = _repository.GetAlunoById(id);
-            if (al == null)
+            var aluno = _repository.GetAlunoById(id);
+            if (aluno == null)
                 return BadRequest("Aluno não encontrado");
+
+            _mapper.Map(model, aluno);
 
             _repository.Update(aluno);
             if (_repository.SaveChanges())
-                return Ok($"Atualizado com sucesso para {aluno.Nome}.");
+                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDTO>(aluno));
 
             return BadRequest("Aluno não atualizado");
 
